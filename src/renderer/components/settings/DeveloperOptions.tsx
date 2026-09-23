@@ -17,8 +17,8 @@ export const DeveloperOptionsButton: SettingsComponent = ({ settings }) => {
 
 function openDeveloperOptionsModal(settings: Settings) {
     openModal(props => (
-        <Modal {...props} size="lg" title="Vesktop Developer Options">
-            <Heading tag="h4">Vencord Location</Heading>
+        <Modal {...props} size="lg" title="PhilCord Developer Options">
+            <Heading tag="h4">PhilCord Component Location</Heading>
             <VencordLocationPicker settings={settings} />
 
             <Heading tag="h4" className={Margins.top16}>
@@ -41,7 +41,7 @@ const VencordLocationPicker: SettingsComponent = ({ settings }) => {
     return (
         <>
             <Paragraph>
-                Vencord files are loaded from{" "}
+                PhilCord client-mod files are loaded from{" "}
                 {usingCustomVencordDir ? (
                     <TextButton
                         variant="link"
@@ -65,7 +65,7 @@ const VencordLocationPicker: SettingsComponent = ({ settings }) => {
                                 break;
                             case "ok":
                                 Toasts.show({
-                                    message: "Vencord install changed. Fully restart Vesktop to apply.",
+                                    message: "PhilCord component location changed. Fully restart PhilCord to apply.",
                                     id: Toasts.genId(),
                                     type: Toasts.Type.SUCCESS
                                 });
@@ -73,7 +73,7 @@ const VencordLocationPicker: SettingsComponent = ({ settings }) => {
                             case "invalid":
                                 Toasts.show({
                                     message:
-                                        "You did not choose a valid Vencord install. Make sure you're selecting the dist dir!",
+                                        "You did not choose a valid component installation. Select its dist directory.",
                                     id: Toasts.genId(),
                                     type: Toasts.Type.FAILURE
                                 });

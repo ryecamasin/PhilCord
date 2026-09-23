@@ -53,7 +53,7 @@ export async function initTray(win: BrowserWindow, setIsQuitting: (val: boolean)
             click: createAboutWindow
         },
         {
-            label: "Repair Vencord",
+            label: "Repair PhilCord",
             async click() {
                 await downloadVencordFiles();
                 app.relaunch();
@@ -61,7 +61,7 @@ export async function initTray(win: BrowserWindow, setIsQuitting: (val: boolean)
             }
         },
         {
-            label: "Reset Vesktop",
+            label: "Reset PhilCord",
             async click() {
                 await clearData(win);
             }
@@ -86,7 +86,7 @@ export async function initTray(win: BrowserWindow, setIsQuitting: (val: boolean)
     ]);
 
     tray = new Tray(await resolveAssetPath(trayVariant));
-    tray.setToolTip("Vesktop");
+    tray.setToolTip("PhilCord");
     tray.setContextMenu(trayMenu);
     tray.on("click", onTrayClick);
 }

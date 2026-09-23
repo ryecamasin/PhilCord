@@ -1,0 +1,3 @@
+.vc-special-card:has(.vc-donate-button) {
+    display: none !important;
+}

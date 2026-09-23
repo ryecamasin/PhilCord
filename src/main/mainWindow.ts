@@ -77,24 +77,24 @@ function initMenuBar(win: BrowserWindow) {
 
     const subMenu = [
         {
-            label: "About Vesktop",
+            label: "About PhilCord",
             click: createAboutWindow
         },
         {
-            label: "Force Update Vencord",
+            label: "Force Update PhilCord Components",
             async click() {
                 await downloadVencordFiles();
                 app.relaunch();
                 app.quit();
             },
-            toolTip: "Vesktop will automatically restart after this operation"
+            toolTip: "PhilCord will automatically restart after this operation"
         },
         {
-            label: "Reset Vesktop",
+            label: "Reset PhilCord",
             async click() {
                 await clearData(win);
             },
-            toolTip: "Vesktop will automatically restart after this operation"
+            toolTip: "PhilCord will automatically restart after this operation"
         },
         {
             label: "Relaunch",
@@ -180,7 +180,7 @@ function initMenuBar(win: BrowserWindow) {
 
     const menuItems = [
         {
-            label: "Vesktop",
+            label: "PhilCord",
             role: "appMenu",
             submenu: subMenu.filter(isTruthy)
         },
@@ -289,7 +289,7 @@ function initStaticTitle(win: BrowserWindow) {
 
     addSettingsListener("staticTitle", enabled => {
         if (enabled) {
-            win.setTitle("Vesktop");
+            win.setTitle("PhilCord");
             win.on("page-title-updated", listener);
         } else {
             win.off("page-title-updated", listener);
@@ -382,7 +382,7 @@ function buildBrowserWindowOptions(): BrowserWindowConstructorOptions {
     }
 
     if (staticTitle) {
-        options.title = "Vesktop";
+        options.title = "PhilCord";
     }
 
     if (process.platform === "darwin") {

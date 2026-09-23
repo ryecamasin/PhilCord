@@ -1,5 +1,5 @@
 name: Bug/Crash Report
-description: Create a bug or crash report for Vesktop.
+description: Create a bug or crash report for PhilCord.
 labels: [bug]
 title: "[Bug] <title>"
 
@@ -7,21 +7,13 @@ body:
     - type: markdown
       attributes:
           value: |
-              GitHub Issues are for development, not support!
-
-              Vesktop and Vencord are two separate things. This issue tracker is only for Vesktop. If your Vesktop crashes, it is very likely an issue with Vencord, not Vesktop.
-
-              If you are experiencing any of the following issues, go to our [Discord server](https://discord.gg/D9uwnFnqmd) for support:
-              - Vesktop doesn't work or crashes
-              - A Vencord plugin doesn't work anymore
-              - You are having issues installing Vesktop
-              - You want to ask a question about Vesktop, Vencord or one of its plugins
+              Search the existing PhilCord issues before submitting a new report. Include enough detail for someone else to reproduce the problem.
 
     - type: input
-      id: vesktop-version
+      id: philcord-version
       attributes:
-          label: Vesktop Version
-          placeholder: e.g. 1.6.7
+          label: PhilCord Version
+          placeholder: e.g. 0.3.0
       validations:
           required: true
 
@@ -37,7 +29,7 @@ body:
       id: install-method
       attributes:
           label: Install Method
-          placeholder: e.g. Setup exe, dmg, Flatpak, rpm, vesktop-git AUR
+          placeholder: e.g. PhilCord Setup exe or source build
       validations:
           required: true
 
@@ -55,7 +47,7 @@ body:
       attributes:
           label: What is the expected behaviour?
           description: Simply detail what the expected behaviour is.
-          placeholder: I expect Vesktop/Discord to open the ... page instead of ..., it prevents me from doing ...
+          placeholder: I expect PhilCord/Discord to open the ... page instead of ..., it prevents me from doing ...
       validations:
           required: true
 
@@ -77,7 +69,7 @@ body:
       attributes:
           label: Errors
           render: text
-          description: Open the Developer Console with `Ctrl+Shift+i` / `Cmd+Option+i`. Then look for any red errors (Ignore network errors like Failed to load resource) and paste them. Run Vesktop from the command line to get console output and also paste that here
+          description: Open the Developer Console with `Ctrl+Shift+i` / `Cmd+Option+i`, look for relevant red errors, and paste them here. If possible, also include PhilCord's command-line output.
       validations:
           required: false
 
@@ -88,6 +80,6 @@ body:
           description: We only accept reports for bugs that happen on official builds on Discord Stable. Canary and PTB are Development branches and may be unstable
           options:
               - label: I've searched existing issues and this hasn't been reported before
-              - label: I installed Vesktop via an official method (download from vesktop.dev or from source), not via something like Nix packages
+              - label: I installed PhilCord from this repository's Releases page or built it from this repository
               - label: This is not a support request
               - label: I am willing to submit a fix for this myself

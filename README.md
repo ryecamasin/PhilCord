@@ -1,60 +1,37 @@
-# Vesktop
+# PhilCord
 
-Vesktop is a custom Discord desktop app
+[Download PhilCord](https://github.com/ryecamasin/PhilCord/releases/latest) | [Report a problem](https://github.com/ryecamasin/PhilCord/issues) | [Source code](https://github.com/ryecamasin/PhilCord)
 
-**Main features**:
-- Vencord preinstalled
-- Much more lightweight and faster than the official Discord app
-- Linux Screenshare with sound & wayland
-- Much better privacy, since Discord has no access to your system
+PhilCord is a community Discord client that forces Discord hostname lookups through encrypted DNS-over-HTTPS (DoH), avoiding reliance on the ISP's DNS resolver without installing a VPN or changing Windows network settings.
 
-**Not yet supported**:
-- Global Keybinds
-- see the [Roadmap](https://github.com/Vencord/Vesktop/issues/324)
+PhilCord is independent software. It is not affiliated with or endorsed by Discord Inc., Cloudflare, Google, or the Vencord contributors. Using a modified Discord client may violate Discord's terms of service.
 
-![](https://github.com/Vencord/Vesktop/assets/45497981/8608a899-96a9-4027-9725-2cb02ba189fd)
-![](https://github.com/Vencord/Vesktop/assets/45497981/8701e5de-52c4-4346-a990-719cb971642e)
+## Current prototype
 
-## Installing
+- Client modifications are included and presented under the PhilCord name.
+- Strict DoH is enabled automatically before Discord opens.
+- Cloudflare (`https://cloudflare-dns.com/dns-query`) is the primary resolver and Google (`https://dns.google/dns-query`) is the fallback.
+- Plaintext DNS fallback is disabled inside PhilCord.
+- No administrator access, VPN profile, background tunnel service, or separate application is required.
+- DoH only bypasses DNS-level interference. It cannot bypass IP, SNI, or protocol-level blocking.
 
-Visit https://vesktop.dev/install
+## Build
 
-## Building from Source
+Requirements: Git, Node.js 22+, and pnpm 11+.
 
-You need to have the following dependencies installed:
-- [Git](https://git-scm.com/downloads)
-- [Node.js](https://nodejs.org/en/download)
-- pnpm: `npm install --global pnpm`
-
-Packaging will create builds in the dist/ folder
-
-```sh
-git clone https://github.com/Vencord/Vesktop
-cd Vesktop
-
-# Install Dependencies
-pnpm i
-
-# Either run it without packaging
-pnpm start
-
-# Or package (will build packages for your OS)
+```powershell
+pnpm install --frozen-lockfile
 pnpm package
-
-# Or only build the Linux Pacman package
-pnpm package --linux pacman
-
-# Or package to a directory only
-pnpm package:dir
 ```
 
-## Building LibVesktop from Source
+`pnpm package` builds PhilCord and creates packages under `dist/`.
 
-This is a small C++ helper library Vesktop uses on Linux to emit D-Bus events. By default, prebuilt binaries for x64 and arm64 are used.
+To run the development client:
 
-If you want to build it from source:
-1. Install build dependencies:
-    - Debian/Ubuntu: `apt install build-essential python3 curl pkg-config libglib2.0-dev`
-    - Fedora: `dnf install @c-development @development-tools python3 curl pkgconf-pkg-config glib2-devel`
-2. Run `pnpm buildLibVesktop`
-3. From now on, building Vesktop will use your own build
+```powershell
+pnpm start
+```
+
+## Licensing
+
+PhilCord is licensed under GPL-3.0-or-later. It is derived from the GPL-licensed [Vesktop](https://github.com/Vencord/Vesktop) and [Vencord](https://github.com/Vendicated/Vencord) projects, whose copyright and attribution notices are retained as required. See [PHILCORD_NOTICE.md](PHILCORD_NOTICE.md) for details.

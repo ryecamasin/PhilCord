@@ -1,12 +1,24 @@
 {
-    "name": "vesktop",
-    "version": "1.6.7",
+    "name": "philcord",
+    "version": "0.3.0",
     "private": true,
-    "description": "Vesktop is a custom Discord desktop app",
-    "keywords": [],
-    "homepage": "https://vencord.dev/",
+    "description": "PhilCord is a community-built Discord client with built-in encrypted DNS",
+    "keywords": [
+        "discord",
+        "philcord",
+        "dns-over-https",
+        "electron"
+    ],
+    "homepage": "https://github.com/ryecamasin/PhilCord",
     "license": "GPL-3.0-or-later",
-    "author": "Vendicated <vendicated@riseup.net>",
+    "author": "PhilCord contributors",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryecamasin/PhilCord.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ryecamasin/PhilCord/issues"
+    },
     "main": "dist/js/main.js",
     "scripts": {
         "build": "tsx scripts/build/build.mts",
@@ -21,8 +33,7 @@
         "start:watch": "pnpm build:dev && tsx scripts/startWatch.mts",
         "test": "pnpm lint && pnpm testTypes",
         "testTypes": "tsc --noEmit",
-        "watch": "pnpm build --watch",
-        "generateMeta": "tsx scripts/utils/generateMeta.mts"
+        "watch": "pnpm build --watch"
     },
     "dependencies": {
         "arrpc": "github:Vencord/arrpc#1dc801e8ea14d96ce8dccff416417614f058afb8",
@@ -64,16 +75,19 @@
         "pnpm": ">=11"
     },
     "build": {
-        "appId": "dev.vencord.vesktop",
-        "productName": "Vesktop",
-        "executableName": "vesktop",
+        "appId": "ph.philcord.desktop",
+        "productName": "PhilCord",
+        "executableName": "philcord",
         "files": [
             "!*",
             "!node_modules",
             "dist/js",
             "static",
+            "!static/wireguard/**/*",
             "package.json",
-            "LICENSE"
+            "LICENSE",
+            "PHILCORD_NOTICE.md",
+            "THIRD_PARTY_LICENSES"
         ],
         "protocols": {
             "name": "Discord",
@@ -87,9 +101,9 @@
             "appimage": "1.0.3"
         },
         "linux": {
-            "icon": "build/icon.svg",
+            "icon": "build/icon.png",
             "category": "Network",
-            "maintainer": "vendicated+vesktop@riseup.net",
+            "maintainer": "PhilCord contributors",
             "target": [
                 {
                     "target": "deb",
@@ -122,13 +136,13 @@
             ],
             "desktop": {
                 "entry": {
-                    "Name": "Vesktop",
+                    "Name": "PhilCord",
                     "GenericName": "Internet Messenger",
                     "Type": "Application",
                     "Categories": "Network;InstantMessaging;Chat;",
-                    "Keywords": "discord;vencord;electron;chat;",
+                    "Keywords": "discord;philcord;electron;chat;",
                     "MimeType": "x-scheme-handler/discord",
-                    "StartupWMClass": "vesktop"
+                    "StartupWMClass": "philcord"
                 }
             }
         },
@@ -176,6 +190,7 @@
         },
         "nsis": {
             "include": "build/installer.nsh",
+            "artifactName": "${productName} Setup ${version}.${ext}",
             "oneClick": false
         },
         "win": {
@@ -198,7 +213,9 @@
             ]
         },
         "publish": {
-            "provider": "github"
+            "provider": "github",
+            "owner": "ryecamasin",
+            "repo": "PhilCord"
         },
         "rpm": {
             "fpm": [
