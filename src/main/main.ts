@@ -9,6 +9,7 @@
  */
 
 import "./cli";
+import "./updater";
 import "./ipc";
 import "./userAssets";
 import "./vesktopProtocol";

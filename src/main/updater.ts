@@ -8,6 +8,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { autoUpdater, UpdateInfo } from "electron-updater";
 import { join } from "path";
 import { IpcEvents, UpdaterIpcEvents } from "shared/IpcEvents";
+import type { UpdateCheckResult } from "shared/updater";
 import { Millis } from "shared/utils/millis";
 
 import { State } from "./settings";
@@ -16,6 +17,14 @@ import { makeLinksOpenExternally } from "./utils/makeLinksOpenExternally";
 import { loadView } from "./vesktopStatic";
 
 let updaterWindow: BrowserWindow | null = null;
+
+// Keep desktop updates independent from Android prereleases in the same repository.
+// The GitHub provider parses every release tag as semver, while the generic feed
+// only follows the desktop release selected as `latest` and its latest.yml file.
+autoUpdater.setFeedURL({
+    provider: "generic",
+    url: "https://github.com/ryecamasin/PhilCord/releases/latest/download"
+});
 
 autoUpdater.on("update-available", update => {
     if (State.store.updater?.ignoredVersion === update.version) return;
@@ -34,15 +43,33 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
 autoUpdater.fullChangelog = true;
 
-const isOutdated = autoUpdater.checkForUpdates().then(res => Boolean(res?.isUpdateAvailable));
+const isOutdated = autoUpdater.checkForUpdates().then(
+    res => Boolean(res?.isUpdateAvailable),
+    error => {
+        console.error("Failed to check for PhilCord updates", error);
+        return false;
+    }
+);
 
 handle(IpcEvents.UPDATER_IS_OUTDATED, () => isOutdated);
 handle(IpcEvents.UPDATER_OPEN, async () => {
     const res = await autoUpdater.checkForUpdates();
     if (res?.isUpdateAvailable && res.updateInfo) openUpdater(res.updateInfo);
+
+    return {
+        status: res?.isUpdateAvailable ? "available" : "current",
+        currentVersion: app.getVersion(),
+        latestVersion: res?.updateInfo?.version
+    } satisfies UpdateCheckResult;
 });
 
 function openUpdater(update: UpdateInfo) {
+    if (updaterWindow && !updaterWindow.isDestroyed()) {
+        updaterWindow.show();
+        updaterWindow.focus();
+        return;
+    }
+
     updaterWindow = new BrowserWindow({
         title: "PhilCord Updater",
         autoHideMenuBar: true,
