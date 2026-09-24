@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
@@ -27,11 +26,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class MainActivity extends Activity {
     private static final int VPN_REQUEST_CODE = 100;
     private static final int MEDIA_PERMISSION_CODE = 101;
     private static final String DISCORD_URL = "https://discord.com/app";
+    private static final String MOBILE_VERSION = "0.1.1";
+    private static final Pattern CHROME_VERSION = Pattern.compile("(?:Chrome|Chromium)/([0-9.]+)");
 
     private WebView webView;
     private TextView statusText;
@@ -107,7 +110,7 @@ public final class MainActivity extends Activity {
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        settings.setUserAgentString(settings.getUserAgentString() + " PhilCordMobile/0.1.0");
+        settings.setUserAgentString(makeDesktopChromeUserAgent(settings.getUserAgentString()));
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         if (Build.VERSION.SDK_INT >= 26) WebView.startSafeBrowsing(this, null);
@@ -123,6 +126,15 @@ public final class MainActivity extends Activity {
                 } catch (Exception ignored) {
                 }
                 return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                view.evaluateJavascript(
+                        "Object.defineProperty(navigator,'platform',{get:()=> 'Win32'});"
+                                + "Object.defineProperty(navigator,'maxTouchPoints',{get:()=> 0});",
+                        null
+                );
             }
 
             @Override
@@ -142,6 +154,16 @@ public final class MainActivity extends Activity {
                 runOnUiThread(() -> handleWebPermissionRequest(request));
             }
         });
+    }
+
+    private static String makeDesktopChromeUserAgent(String webViewUserAgent) {
+        Matcher matcher = CHROME_VERSION.matcher(webViewUserAgent);
+        String chromeVersion = matcher.find() ? matcher.group(1) : "124.0.0.0";
+        return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"
+                + chromeVersion
+                + " Safari/537.36 PhilCordMobile/"
+                + MOBILE_VERSION;
     }
 
     private void handleWebPermissionRequest(PermissionRequest request) {
