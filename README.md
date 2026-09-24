@@ -32,6 +32,23 @@ To run the development client:
 pnpm start
 ```
 
+## Android
+
+The Android app is in [`android/`](android/). It combines a Discord web client with an app-scoped, DNS-only Android VPN that sends DNS queries to Cloudflare or Google over HTTPS. Ordinary Discord traffic is not tunneled through a third-party server.
+
+Android displays a one-time VPN permission prompt because encrypted DNS is implemented with the system `VpnService` API. The VPN applies only to PhilCord.
+
+Build a debug APK on Windows with:
+
+```powershell
+cd android
+.\gradlew.bat assembleDebug
+```
+
+The APK is written to `android/app/build/outputs/apk/debug/app-debug.apk`.
+
+The first Android release is a sideloadable prototype. It has not yet been submitted to Google Play, and Android may ask you to allow installation from your browser or file manager.
+
 ## Licensing
 
 PhilCord is licensed under GPL-3.0-or-later. It is derived from the GPL-licensed [Vesktop](https://github.com/Vencord/Vesktop) and [Vencord](https://github.com/Vendicated/Vencord) projects, whose copyright and attribution notices are retained as required. See [PHILCORD_NOTICE.md](PHILCORD_NOTICE.md) for details.

@@ -5,3 +5,6 @@ node_modules
 .idea/
 .pnpm-store/
 static/wireguard/
+android/.gradle/
+android/local.properties
+android/**/build/

@@ -8,4 +8,4 @@ PhilCord is an independent community project derived from Vesktop and Vencord. I
 - Vesktop (<https://github.com/Vencord/Vesktop>) and Vencord (<https://github.com/Vendicated/Vencord>) are licensed under GPL-3.0-or-later. Their existing copyright and SPDX notices are retained in the source tree.
 - Discord, Cloudflare, and Google are trademarks of their respective owners.
 
-PhilCord configures Electron's built-in DNS-over-HTTPS resolver with public endpoints operated by Cloudflare and Google. It does not include or provide a VPN service.
+PhilCord Desktop configures Electron's built-in DNS-over-HTTPS resolver with public endpoints operated by Cloudflare and Google. PhilCord Android uses Android's local, app-scoped `VpnService` API only to intercept PhilCord's DNS packets and resolve them over HTTPS; it does not route ordinary traffic through or provide a remote VPN server.

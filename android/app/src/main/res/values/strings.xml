@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhilCord</string>
+    <string name="secure_dns_channel">PhilCord Secure DNS</string>
+    <string name="secure_dns_active">Encrypted DNS is active for PhilCord</string>
+</resources>
