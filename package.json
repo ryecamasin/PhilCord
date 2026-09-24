@@ -1,6 +1,6 @@
 {
     "name": "philcord",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "private": true,
     "description": "PhilCord is a community-built Discord client with built-in encrypted DNS",
     "keywords": [
